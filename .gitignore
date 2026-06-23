@@ -1,0 +1,7 @@
+# per-user / per-machine plugin settings — never commit (slugs + notes are local)
+.claude/*.local.md
+.claude/*.local.json
+
+# os / editor cruft
+.DS_Store
+*.swp
