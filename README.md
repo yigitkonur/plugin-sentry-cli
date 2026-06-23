@@ -30,15 +30,53 @@ most debugging ends at rung 1 — `issue view` already embeds the latest event, 
 /plugin install sentry-cli@plugin-sentry-cli
 ```
 
-then make sure the cli itself is around and logged in:
+then make sure the cli itself is installed:
 
 ```shell
 brew install getsentry/tools/sentry        # or: curl https://cli.sentry.dev/install -fsS | bash
-sentry auth login                          # oauth, or set SENTRY_AUTH_TOKEN to a personal token
-sentry org list                            # sanity check
 ```
 
-that's it — next time you ask the agent something like "why is the api throwing 500s in prod", the skill kicks in.
+then set up auth (see next section) and you're done — ask the agent "why is the api throwing 500s in prod" and the skill kicks in.
+
+## auth — set one permanent token (the whole point)
+
+here's the thing that motivated this plugin. the sentry **mcp** server authenticates over an oauth device flow, and those sessions expire and quietly log you out — so mid-task your agent starts hitting `not authenticated` and you're back to clicking through a browser. annoying.
+
+the **cli** reads a token straight from an env var. set a personal token once in your shell rc and you're authed basically forever — no device-code dance, no re-login, no surprise logouts. that's the upgrade.
+
+**1. make a personal token.** sentry.io → settings → account → user auth tokens → *create new token*. it starts with `sntryu_`. minimum scopes for read-only debugging:
+
+```
+org:read
+project:read
+event:read
+```
+
+add `event:write` only if you want the agent to resolve/archive/merge issues from the cli (the skill treats those as confirm-first anyway).
+
+**2. drop it in your shell rc** (`~/.zshrc`, `~/.bashrc`, `~/.config/fish/config.fish` …):
+
+```shell
+export SENTRY_AUTH_TOKEN="sntryu_your_token_here"
+export SENTRY_FORCE_ENV_TOKEN=1
+```
+
+`SENTRY_FORCE_ENV_TOKEN=1` tells the cli to always prefer this env token over any stored oauth login — so it never silently falls back to an expired session. that's what makes it stick.
+
+**3. reload + verify:**
+
+```shell
+source ~/.zshrc        # or just open a new terminal
+sentry org list        # should print your org(s) — you're in
+```
+
+that's it. the token lives in your environment, the skill picks it up automatically, and the agent never has to think about auth again.
+
+> heads up: `sentry auth whoami` returns a 404 for `sntryu_` personal tokens — that's harmless, the identity endpoint just isn't wired for that token type. everything else works. (org tokens, `sntrys_`, are scoped to one org and may lack read scopes — personal token is the move.)
+>
+> self-hosted or eu? saas region routing is automatic; for a self-hosted instance use `sentry auth login --url https://sentry.your-company.com`.
+
+oauth still works too — `sentry auth login` — if you'd rather. you just lose the "never log out" benefit.
 
 ## config (optional but nice)
 

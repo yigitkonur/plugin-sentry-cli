@@ -3,6 +3,9 @@
   "owner": {
     "name": "yigitkonur"
   },
+  "metadata": {
+    "description": "Sentry CLI debugging tools for AI agents — token-efficient production error, log, performance, and replay investigation."
+  },
   "plugins": [
     {
       "name": "sentry-cli",
