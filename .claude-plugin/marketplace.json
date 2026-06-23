@@ -1,0 +1,13 @@
+{
+  "name": "plugin-sentry-cli",
+  "owner": {
+    "name": "yigitkonur"
+  },
+  "plugins": [
+    {
+      "name": "sentry-cli",
+      "source": "./",
+      "description": "Investigate production errors, logs, performance, and replays through the new Sentry CLI — a token-efficient debugging funnel for AI agents."
+    }
+  ]
+}

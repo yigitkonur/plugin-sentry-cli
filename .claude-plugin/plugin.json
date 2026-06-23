@@ -1,0 +1,22 @@
+{
+  "name": "sentry-cli",
+  "version": "0.1.0",
+  "description": "Investigate production errors, crashes, logs, performance, and session replays through the new Sentry CLI — a token-efficient debugging funnel for AI agents (not legacy sentry-cli).",
+  "author": {
+    "name": "yigitkonur"
+  },
+  "homepage": "https://github.com/yigitkonur/plugin-sentry-cli",
+  "repository": "https://github.com/yigitkonur/plugin-sentry-cli",
+  "license": "MIT",
+  "keywords": [
+    "sentry",
+    "observability",
+    "debugging",
+    "errors",
+    "stacktrace",
+    "logs",
+    "performance",
+    "replays",
+    "cli"
+  ]
+}
