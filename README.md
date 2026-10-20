@@ -1,5 +1,7 @@
 # plugin-sentry-cli
 
+> **superseded by [plugin-sentry](https://github.com/yigitkonur/plugin-sentry).** same idea, bigger scope: the triage ladder from this repo plus audit, init, apply and verify, on the current `sentry` v4 cli, with every claim traced to the official docs. install: `claude plugin marketplace add yigitkonur/plugin-sentry` then `claude plugin install sentry@plugin-sentry`. this repo is archived and will not change.
+
 a claude code plugin that teaches your agent to debug production through the **new sentry cli** — the real `sentry` binary, not the crusty legacy `sentry-cli` everyone confuses it with.
 
 the whole idea: when something's on fire in prod, your agent shouldn't guess. sentry already has the actual stacktrace, the tags, the breadcrumbs, how often it fires, and even an ai root-cause take. this plugin gives the agent a tight, token-efficient playbook for getting at all of that from the terminal.
